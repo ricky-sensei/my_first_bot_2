@@ -1,4 +1,5 @@
 import os
+from flask import Flask
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -9,8 +10,13 @@ load_dotenv(override=True)
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi(os.environ["ACCESS_TOKEN"])
 handler = WebhookHandler(os.environ["CHANNEL_SECRET"])
+
+line_bot_api = LineBotApi(os.environ["ACCESS_TOKEN"])
+
+@app.route("/")
+def index():
+    return "You call index()"
 
 
 @app.route("/callback", methods=["POST"])
